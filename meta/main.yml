@@ -5,6 +5,18 @@ galaxy_info:
   company: Wolface IT
   license: GPLv3
   min_ansible_version: 2.1
+  platforms:
+    - name: Debian
+      versions:
+        - jessie
+        - stretch
+    - name: Ubuntu
+      versions:
+        - xenial
+        - yakkety
+        - zesty
+        - bionic
+        - cosmic
   galaxy_tags:
     - system
     - web
