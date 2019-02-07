@@ -1,4 +1,5 @@
 galaxy_info:
+  role_name: icecast
   author: Gilles Pietri
   description: Install and configures Icecast and can set mounts
   company: Wolface IT
