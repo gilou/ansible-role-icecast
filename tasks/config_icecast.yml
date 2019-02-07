@@ -1,0 +1,17 @@
+- name: Enable cap_bind_port on icecast
+  capabilities: path=/usr/bin/icecast2 capability=CAP_NET_BIND_SERVICE+ep state=present
+  notify: restart icecast
+  when: icecast_use_capabilities
+- name: Enable icecast for Debian
+  lineinfile: regexp='ENABLE=.+' line='ENABLE=true' dest=/etc/default/icecast2
+  notify: restart icecast
+  register: icecast_enabled
+  when: ansible_os_family == 'Debian'
+- name: Push Icecast Config file
+  template: src=icecast.xml.j2 dest=/etc/icecast2/icecast.xml
+  notify: reload icecast
+- name: Ensure service is activated and started
+  service: name=icecast2 state=started enabled=yes
+- name: restart icecast if we enabled it
+  service: name=icecast2 state=restarted enabled=yes
+  when: icecast_enabled is changed

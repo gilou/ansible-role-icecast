@@ -1,0 +1,4 @@
+- name: reload icecast
+  service: name=icecast2 state=reloaded
+- name: restart icecast
+  service: name=icecast2 state=restarted

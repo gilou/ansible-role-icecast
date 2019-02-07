@@ -1,0 +1,39 @@
+    <!-- ### Début mount  ### -->
+    <!-- {{ ansible_managed }} -->
+    <!-- Debut conf hotels  -->
+    <!-- Fallback global -->
+    <mount>
+        <mount-name>/hotel-secours</mount-name>
+        <password>{{ icecast_source_password }}</password>
+        <public>0</public>
+	<hidden>1</hidden>
+    </mount>
+
+{% for server in groups[icecast_feeds] %}
+{% for radio, details in hostvars[server]['liq_radios']|dictsort %}
+{%   set mount = details['mountpoint']  -%}
+
+    <!-- Conf auto pour {{ radio }}  ({{ server}})-->
+    <!-- backup -->
+    <relay>
+        <port>8000</port>
+        <server>127.0.0.1</server>
+        <mount>/hotel-secours</mount>
+        <local-mount>/{{ mount }}-secours</local-mount>
+        <public>0</public>
+	<hidden>1</hidden>
+    </relay>
+    <!-- Flux -->
+    <mount>
+        <mount-name>/{{ mount }}</mount-name>
+	{%- if 'stream_password' in details %}
+        <password>{{ details['stream_password'] }}</password>
+	{% endif %}
+	<fallback-mount>/{{ mount }}-secours</fallback-mount>
+	<fallback-override>1</fallback-override>
+        <public>0</public>
+	<hidden>1</hidden>
+    </mount>
+{% endfor %}
+{% endfor %}
+    <!-- ### Fin mount  ### -->
