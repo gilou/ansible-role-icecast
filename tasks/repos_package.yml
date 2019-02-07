@@ -1,7 +1,9 @@
 - name: GPG key for OBS repository
-  apt_key: url=http://download.opensuse.org/repositories/multimedia:/{{ icecast_channel }}/{{ icecast_distribution }}_{{ icecast_distribution_version }}/Release.key state=present
+  apt_key:
+    url: "http://download.opensuse.org/repositories/multimedia:/{{ icecast_channel }}/{{ icecast_distribution }}_{{ icecast_distribution_version }}/Release.key"
+    state: present
 - name: OBS repository
-  apt_repository: 
+  apt_repository:
     repo: "deb http://download.opensuse.org/repositories/multimedia:/{{ icecast_channel }}/{{ icecast_distribution }}_{{ icecast_distribution_version }}/ ./"
     filename: xiph_obs
 - name: Capabilities and icecast2 package
