@@ -28,16 +28,19 @@
     <hostname>{{ inventory_hostname }}</hostname>
     <listen-socket>
         <port>8000</port>
+	<bind-address>::</bind-address>
     </listen-socket>
     {% if icecast_use_capabilities %}
     <listen-socket>
         <port>80</port>
+	<bind-address>::</bind-address>
     </listen-socket>
     {% endif %}
     {% if icecast_use_tls and icecast_use_capabilities %}
     <listen-socket>
         <port>443</port>
 	<ssl>1</ssl>
+	<bind-address>::</bind-address>
     </listen-socket>
     {% endif %}
     <http-headers>
