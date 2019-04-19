@@ -11,7 +11,7 @@
 
 {% for server in groups[icecast_feeds] %}
 {% for radio, details in hostvars[server]['liq_radios']|dictsort %}
-{% if not ( details['mountpoint']['nobackup'] | default(False) ) %}
+{% if not ( details['nobackup'] | default(False) ) %}
 {%   set mount = details['mountpoint']  -%}
 
     <!-- Conf auto pour {{ radio }}  ({{ server}})-->
