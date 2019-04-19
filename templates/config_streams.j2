@@ -3,7 +3,7 @@
     <!-- Debut conf hotels  -->
     <!-- Fallback global -->
     <mount>
-        <mount-name>/hotel-secours</mount-name>
+        <mount-name>/secours</mount-name>
         <password>{{ icecast_source_password }}</password>
         <public>0</public>
 	<hidden>1</hidden>
@@ -18,7 +18,7 @@
     <relay>
         <port>8000</port>
         <server>127.0.0.1</server>
-        <mount>/hotel-secours</mount>
+        <mount>/secours</mount>
         <local-mount>/{{ mount }}-secours</local-mount>
         <public>0</public>
 	<hidden>1</hidden>
