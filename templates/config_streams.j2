@@ -27,8 +27,8 @@
     <!-- Flux -->
     <mount>
         <mount-name>/{{ mount }}</mount-name>
-	{%- if 'stream_password' in details %}
-        <password>{{ details['stream_password'] }}</password>
+	{%- if 'stream_password' in details or 'liq_source_password' in hostvars[server] %}
+        <password>{{ details['stream_password'] | default(hostvars[server]['liq_source_password']) }}</password>
 	{% endif %}
 	<fallback-mount>/{{ mount }}-secours</fallback-mount>
 	<fallback-override>1</fallback-override>
