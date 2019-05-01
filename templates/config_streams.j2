@@ -24,6 +24,12 @@
         <public>0</public>
 	<hidden>1</hidden>
     </relay>
+    <mount>
+        <mount-name>/{{ mount }}-secours</mount-name>
+        <public>0</public>
+	<hidden>1</hidden>
+    </mount>
+
     <!-- Flux -->
     <mount>
         <mount-name>/{{ mount }}</mount-name>
@@ -32,8 +38,8 @@
 	{% endif -%}
 	<fallback-mount>/{{ mount }}-secours</fallback-mount>
 	<fallback-override>1</fallback-override>
-        <public>0</public>
-	<hidden>1</hidden>
+        <public>{{ details['public'] | default(0) }}</public>
+	<hidden>{{ details['hidden'] | default(1) }}</hidden>
     </mount>
 {% endif %}
 {% endfor %}
