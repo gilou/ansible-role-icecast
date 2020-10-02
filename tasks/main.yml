@@ -1,4 +1,5 @@
-- include: repos_package.yml
-- tags: config
-  include: config_icecast.yml
-- include: titrage.yml
+- import_tasks: repos_package.yml
+- tags: 
+    - config
+  import_tasks: config_icecast.yml
+- import_tasks: titrage.yml

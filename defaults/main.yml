@@ -4,6 +4,7 @@ icecast_admin_user: admin
 icecast_admin_password: hackme
 icecast_hosting: []
 icecast_feeds: stream-servers
+icecast_use_obs_repository: true
 icecast_channel: xiph
 icecast_distribution: "{{ ansible_distribution if ansible_distribution != 'Ubuntu' else 'xUbuntu' }}"
 icecast_distribution_version: "{{ ansible_distribution_version if ansible_distribution != 'Debian' else ansible_distribution_major_version + '.0' }}"

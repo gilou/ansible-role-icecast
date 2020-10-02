@@ -2,10 +2,12 @@
   apt_key:
     url: "http://download.opensuse.org/repositories/multimedia:/{{ icecast_channel }}/{{ icecast_distribution }}_{{ icecast_distribution_version }}/Release.key"
     state: present
+  when: icecast_use_obs_repository
 - name: OBS repository
   apt_repository:
     repo: "deb http://download.opensuse.org/repositories/multimedia:/{{ icecast_channel }}/{{ icecast_distribution }}_{{ icecast_distribution_version }}/ ./"
     filename: xiph_obs
+  when: icecast_use_obs_repository
 - name: Capabilities and icecast2 package
   apt:
     state: latest
