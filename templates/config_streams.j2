@@ -3,7 +3,7 @@
     <!-- Debut conf hotels  -->
     <!-- Fallback global -->
     <mount>
-        <mount-name>/{{ hostvars[server]['liq_fallback'] | default('secours') }}</mount-name>
+        <mount-name>/secours</mount-name>
         <password>{{ icecast_source_password }}</password>
         <public>0</public>
 	<hidden>1</hidden>
@@ -11,8 +11,8 @@
 
 {% for server in groups[icecast_feeds] %}
 {% for radio, details in hostvars[server]['liq_radios']|dictsort %}
-{% if not ( details['nobackup'] | default(False) ) %}
 {%   set mount = details['mountpoint']  -%}
+{% if not ( details['nobackup'] | default(False) ) %}
 
     <!-- Conf auto pour {{ radio }}  ({{ server}})-->
     <!-- backup -->
@@ -29,6 +29,7 @@
         <public>0</public>
 	<hidden>1</hidden>
     </mount>
+{% endif %}
 
     <!-- Flux -->
     <mount>
@@ -36,12 +37,13 @@
 	{% if 'stream_password' in details or 'liq_source_password' in hostvars[server] -%}
         <password>{{ details['stream_password'] | default(hostvars[server]['liq_source_password']) }}</password>
 	{% endif -%}
+{% if not ( details['nobackup'] | default(False) ) %}
 	<fallback-mount>/{{ mount }}-secours</fallback-mount>
 	<fallback-override>1</fallback-override>
-        <public>{{ details['public'] | default(0) }}</public>
+{% endif %}
+    <public>{{ details['public'] | default(0) }}</public>
 	<hidden>{{ details['hidden'] | default(1) }}</hidden>
     </mount>
-{% endif %}
 {% endfor %}
 {% endfor %}
     <!-- ### Fin mount  ### -->
