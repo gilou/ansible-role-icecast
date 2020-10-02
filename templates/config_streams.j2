@@ -3,7 +3,7 @@
     <!-- Debut conf hotels  -->
     <!-- Fallback global -->
     <mount>
-        <mount-name>/secours</mount-name>
+        <mount-name>/{{ hostvars[server]['liq_fallback'] | default('secours') }}</mount-name>
         <password>{{ icecast_source_password }}</password>
         <public>0</public>
 	<hidden>1</hidden>
@@ -19,7 +19,7 @@
     <relay>
         <port>8000</port>
         <server>127.0.0.1</server>
-        <mount>/secours</mount>
+        <mount>/{{ hostvars[server]['liq_fallback'] | default('secours') }}</mount>
         <local-mount>/{{ mount }}-secours</local-mount>
         <public>0</public>
 	<hidden>1</hidden>
