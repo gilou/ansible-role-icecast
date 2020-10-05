@@ -1,6 +1,7 @@
 - name: Set bindir depending on install method
   set_fact:
     icecast_binary: "{{ ansible_install_method in ('obs', 'distribution') | ternary('/usr/bin/icecast2', '/usr/local/bin/icecast') }}"
+    
 - name: Enable cap_bind_port on icecast
   capabilities:
     path: "{{ icecast_binary }}"

@@ -19,3 +19,9 @@
   args:
     chdir: "{{ icecast_source_dir }}/icecast-server"
     creates: "{{ icecast_source_dir }}/icecast-server/src/icecast"
+- name: Install
+  become: true
+  command: make install
+  args:
+    chdir: "{{ icecast_source_dir }}/icecast-server"
+    creates: ""
