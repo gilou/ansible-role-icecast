@@ -1,5 +1,13 @@
-- import_tasks: repos_package.yml
+- import_tasks: prerequisites.yml
+- import_tasks: obs_repos.yml
+  when: icecast_install_method == 'obs'
 - tags: 
     - config
+- name: Icecast Package
+  package:
+    name: icecast2
+  when: icecast_install_method in ('obs', 'distribution')
+- import_tasks: compile_icecast.yml
+  when: icecast_install_method == 'source'
   import_tasks: config_icecast.yml
 - import_tasks: titrage.yml

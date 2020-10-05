@@ -4,7 +4,9 @@ icecast_admin_user: admin
 icecast_admin_password: hackme
 icecast_hosting: []
 icecast_feeds: stream-servers
-icecast_use_obs_repository: true
+# icecast_install_method can be : distribution, obs or source
+icecast_install_method: distribution
+icecast_source_dir: /home/vagrant
 icecast_channel: xiph
 icecast_distribution: "{{ ansible_distribution if ansible_distribution != 'Ubuntu' else 'xUbuntu' }}"
 icecast_distribution_version: "{{ ansible_distribution_version if ansible_distribution != 'Debian' else ansible_distribution_major_version + '.0' }}"
@@ -14,3 +16,4 @@ icecast_max_clients: 500
 icecast_max_sources: 100
 icecast_use_tls: false
 icecast_use_capabilities: true
+icecast_base_dir: /usr/share/icecast2

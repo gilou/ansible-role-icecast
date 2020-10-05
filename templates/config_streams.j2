@@ -12,9 +12,9 @@
 {% for server in groups[icecast_feeds] %}
 {% for radio, details in hostvars[server]['liq_radios']|dictsort %}
 {%   set mount = details['mountpoint']  -%}
+    <!-- Conf auto pour {{ radio }}  ({{ server}})-->
 {% if not ( details['nobackup'] | default(False) ) %}
 
-    <!-- Conf auto pour {{ radio }}  ({{ server}})-->
     <!-- backup -->
     <relay>
         <port>8000</port>

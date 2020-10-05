@@ -1,0 +1,21 @@
+- name: get icecast source from git
+  git:
+    depth: 1
+    dest: "{{ icecast_source_dir }}/icecast-server"
+    repo: https://gitlab.xiph.org/xiph/icecast-server.git
+    recursive: true
+- name: generate configure
+  command: ./autogen.sh
+  args:
+    chdir: "{{ icecast_source_dir }}/icecast-server"
+    creates: "{{ icecast_source_dir }}/icecast-server/configure"
+- name: Configure
+  command: ./configure
+  args:
+    chdir: "{{ icecast_source_dir }}/icecast-server"
+    creates: "{{ icecast_source_dir }}/icecast-server/Makefile"
+- name: Compile Icecast
+  command: make
+  args:
+    chdir: "{{ icecast_source_dir }}/icecast-server"
+    creates: "{{ icecast_source_dir }}/icecast-server/src/icecast"

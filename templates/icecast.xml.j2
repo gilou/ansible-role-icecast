@@ -47,10 +47,10 @@
         <header name="Access-Control-Allow-Origin" value="*" />
     </http-headers>
     <paths>
-        <basedir>/usr/share/icecast2</basedir>
+        <basedir>{{ icecast_base_dir }}</basedir>
         <logdir>/var/log/icecast2</logdir>
-        <webroot>/usr/share/icecast2/web</webroot>
-        <adminroot>/usr/share/icecast2/admin</adminroot>
+        <webroot>{{ icecast_base_dir }}/web</webroot>
+        <adminroot>{{ icecast_base_dir }}/admin</adminroot>
         <alias source="/" destination="/status.xsl"/>
         <!-- The certificate file needs to contain both public and private part.
              Both should be PEM encoded.

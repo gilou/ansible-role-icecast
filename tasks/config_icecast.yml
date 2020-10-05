@@ -1,12 +1,18 @@
+- name: Set bindir depending on install method
+  set_fact:
+    icecast_binary: "{{ ansible_install_method in ('obs', 'distribution') | ternary('/usr/bin/icecast2', '/usr/local/bin/icecast') }}"
 - name: Enable cap_bind_port on icecast
-  capabilities: path=/usr/bin/icecast2 capability=CAP_NET_BIND_SERVICE+ep state=present
+  capabilities:
+    path: "{{ icecast_binary }}"
+    capability: CAP_NET_BIND_SERVICE+ep
+    state: present
   notify: restart icecast
   when: icecast_use_capabilities
 - name: Enable icecast for Debian
   lineinfile: regexp='ENABLE=.+' line='ENABLE=true' dest=/etc/default/icecast2
   notify: restart icecast
   register: icecast_enabled
-  when: ansible_os_family == 'Debian'
+  when: ansible_os_family == 'Debian' and ansible_install_method in ('obs', 'distribution')
 - name: Push Icecast Config file
   template: src=icecast.xml.j2 dest=/etc/icecast2/icecast.xml
   notify: reload icecast
