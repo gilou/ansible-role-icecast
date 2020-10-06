@@ -1,13 +1,16 @@
 - name: Capabilities and icecast2 package
+  become: true
   apt:
     state: latest
     name:
       - libcap2-bin
   when: icecast_use_capabilities
 - name: Packages required for compilation
+  become: true
   apt:
     state: build-dep
     name: icecast2
+  when: icecast_install_method == 'source'
 - name: Other dependencies
   package:
     name: libssl-dev
