@@ -3,7 +3,7 @@
     <!-- Debut conf feed  -->
 {% for server in groups[icecast_feeds] %}
 {% for radio, details in hostvars[server]['liq_radios']|dictsort %}
-{%   set mount = details['mountpoint']  -%}
+{%   set mount = details['mountpoint'] | default(radio) -%}
     <!-- Conf auto pour {{ radio }}  ({{ server}})-->
 {% if not ( details['no_default_backup'] | default(False) ) %}
 
