@@ -3,7 +3,7 @@ icecast_relay_password: hackme
 icecast_admin_user: admin
 icecast_admin_password: hackme
 icecast_hosting: []
-icecast_feeds: stream-servers
+icecast_feeds: stream_servers
 # icecast_install_method can be : distribution, obs or source
 icecast_install_method: distribution
 icecast_source_dir: /home/vagrant
