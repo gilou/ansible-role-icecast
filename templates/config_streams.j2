@@ -26,16 +26,16 @@
     <!-- Flux -->
     <mount>
         <mount-name>/{{ mount }}</mount-name>
-	{% if 'stream_password' in details or 'liq_source_password' in hostvars[server] %}
+        {% if 'stream_password' in details or 'liq_source_password' in hostvars[server] %}
         <password>{{ details['stream_password'] | default(hostvars[server]['liq_source_password']) }}</password>
-	{% endif %}
-    {% if not ( details['no_default_backup'] | default(False) ) %}
+        {% endif %}
+        {% if not ( details['no_default_backup'] | default(False) ) %}
 	    <fallback-mount>/{{ mount }}-secours</fallback-mount>
 	    <fallback-override>1</fallback-override>
-    {% elif details['specific_backup'] | default(False)  %}
+        {% elif details['specific_backup'] | default(False)  %}
 	    <fallback-mount>/{{ details['specific_backup'] }}</fallback-mount>
 	    <fallback-override>1</fallback-override>
-    {% endif %}
+        {% endif %}
         <public>{{ details['public'] | default(0) }}</public>
 	    <hidden>{{ details['hidden'] | default(1) }}</hidden>
     </mount>

@@ -1,4 +1,7 @@
 - name: crossdomain.xml
   template: src=crossdomain.xml dest=/etc/icecast2/web/crossdomain.xml
 - name: title.xsl
-  template: src=title.xsl dest=/usr/share/icecast2/web/title.xsl
+  template:
+    src: title.xsl
+    dest: /usr/share/icecast2/web/title.xsl
+    mode: "0644"
