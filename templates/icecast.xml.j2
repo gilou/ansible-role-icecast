@@ -25,15 +25,15 @@
         <yp-url>http://dir.xiph.org/cgi-bin/yp-cgi</yp-url>
     </directory>
 
-    <hostname>{{ inventory_hostname }}</hostname>
+    <hostname>{{ icecast_hostname }}</hostname>
     <listen-socket>
         <port>8000</port>
-	<bind-address>::</bind-address>
+	    <bind-address>::</bind-address>
     </listen-socket>
     {% if icecast_use_capabilities %}
     <listen-socket>
         <port>80</port>
-	<bind-address>::</bind-address>
+	    <bind-address>::</bind-address>
     </listen-socket>
     {% endif %}
     {% if icecast_use_tls and icecast_use_capabilities %}
@@ -54,8 +54,8 @@
         <alias source="/" destination="/status.xsl"/>
         <!-- The certificate file needs to contain both public and private part.
              Both should be PEM encoded.
-	-->
         <ssl-certificate>/etc/icecast2/ssl/icecast.pem</ssl-certificate>
+	-->
     </paths>
 
 {% for hosted in icecast_hosting %}
@@ -66,9 +66,15 @@
         <errorlog>error.log</errorlog>
         <!-- <playlistlog>playlist.log</playlistlog> -->
         <loglevel>3</loglevel> <!-- 4 Debug, 3 Info, 2 Warn, 1 Error -->
-        <logsize>10000</logsize> <!-- Max size of a logfile -->
     </logging>
     <security>
+{% if icecast_use_tls %}
+    <tls-context>
+        <tls-certificate>/etc/letsencrypt/live/{{ icecast_hostname }}/fullchain.pem</tls-certificate>
+        <tls-key>/etc/letsencrypt/live/{{ icecast_hostname }}/privkey.pem</tls-key>
+    </tls-context>
+       
+{% endif %}
         <chroot>0</chroot>
         <changeowner>
             <user>icecast2</user>

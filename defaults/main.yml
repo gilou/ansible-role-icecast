@@ -17,3 +17,4 @@ icecast_max_sources: 100
 icecast_use_tls: false
 icecast_use_capabilities: true
 icecast_base_dir: /usr/share/icecast2
+icecast_hostname: "{{ inventory_hostname }}"

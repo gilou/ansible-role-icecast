@@ -5,6 +5,11 @@
     name:
       - libcap2-bin
   when: icecast_use_capabilities
+- name: enable deb-src on debian
+  apt_repository:
+    repo: "deb-src http://deb.debian.org/debian {{ ansible_distribution_release }} main contrib non-free"
+    state: "{{ ( icecast_install_method == 'source' ) | ternary('present', 'absent') }}"
+    filename: src
 - name: Packages required for compilation
   become: true
   apt:
@@ -13,5 +18,7 @@
   when: icecast_install_method == 'source'
 - name: Other dependencies
   package:
-    name: libssl-dev
+    name:
+      - libssl-dev
+      - git
   when: icecast_install_method == 'source'
