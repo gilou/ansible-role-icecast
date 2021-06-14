@@ -14,6 +14,8 @@ icecast_location: Paris, France
 icecast_admin_email: admin@domain.invalid
 icecast_max_clients: 500
 icecast_max_sources: 100
+icecast_burst_size: 65535
+icecast_queue_size: 524288
 icecast_use_tls: false
 icecast_use_capabilities: true
 icecast_base_dir: /usr/share/icecast2
