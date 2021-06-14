@@ -4,6 +4,7 @@
     dest: "{{ icecast_source_dir }}/icecast-server"
     repo: https://gitlab.xiph.org/xiph/icecast-server.git
     recursive: true
+  register: icecast_source_change
 - name: generate configure
   command: ./autogen.sh
   args:
@@ -18,10 +19,11 @@
   command: make
   args:
     chdir: "{{ icecast_source_dir }}/icecast-server"
-    creates: "{{ icecast_source_dir }}/icecast-server/src/icecast"
+  when: icecast_source_change is changed
 - name: Install
   become: true
   command: make install
   args:
     chdir: "{{ icecast_source_dir }}/icecast-server"
-    creates: ""
+    creates: "/usr/local/bin/icecast"
+  when: icecast_source_change is changed
