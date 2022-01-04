@@ -11,7 +11,11 @@
     <relay>
         <port>8000</port>
         <server>127.0.0.1</server>
+        {% if details['specific_backup'] %}
+        <mount>/{{ details['specific_backup'] }}</mount>
+        {% else %}
         <mount>/{{ hostvars[server]['liq_fallback'] | default('secours') }}</mount>
+        {% endif %}
         <local-mount>/{{ mount }}-secours</local-mount>
         <public>0</public>
 	<hidden>1</hidden>
