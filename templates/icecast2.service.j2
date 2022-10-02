@@ -1,0 +1,20 @@
+[Unit]
+Description=Icecast streaming server
+
+[Service]
+EnvironmentFile=-/etc/default/icecast2
+Environment="USERID=icecast2 GROUPID=icecast CONFIGFILE=/etc/icecast2/icecast.xml"
+ExecReload=kill -HUP $MAINPID
+{% if icecast_install_method in ('obs', 'distrib') %}
+ExecStart=icecast2 -c $CONFIGFILE
+{% else %}
+ExecStart=/usr/local/bin/icecast -c $CONFIGFILE
+{% endif %}
+User=icecast2
+Group=icecast
+{% if icecast_use_capabilities %}
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+{% endif %}
+
+[Install]
+WantedBy=multi-user.target
