@@ -4,8 +4,18 @@ icecast_admin_user: admin
 icecast_admin_password: hackme
 icecast_hosting: []
 icecast_feeds: stream_servers
+# run as root + changeowner to icecast_user
+# run as user + service running as icecast_user
+icecast_run_as_root: false
+icecast_user: icecast2
+icecast_group: icecast
+icecast_conf_prng: false
+
 # icecast_install_method can be : distribution, obs or source
-icecast_install_method: distribution
+icecast_install_method: distrib
+# Version is just an indication, it is not used for compiling/downloading
+# but only to allow newer master/2.5 stanzas
+icecast_version: 2.4
 icecast_source_dir: /home/vagrant
 icecast_channel: xiph
 icecast_distribution: "{{ ansible_distribution if ansible_distribution != 'Ubuntu' else 'xUbuntu' }}"

@@ -76,9 +76,15 @@
        
 {% endif %}
         <chroot>0</chroot>
+{% if icecast_run_as_root %}
         <changeowner>
-            <user>icecast2</user>
-            <group>icecast</group>
+            <user>{{ icecast_user }}</user>
+            <group>{{ icecast_group }}</group>
         </changeowner>
+{% endif %}
+{% if icecast_conf_prng %}
+    <prng-seed type="read-write" size="1024">/var/lib/icecast2/icecast.prng-seed</prng-seed>
+    <prng-seed type="profile">linux</prng-seed>
+{% endif %}
     </security>
 </icecast>

@@ -6,7 +6,7 @@
 - name: Icecast Package
   package:
     name: icecast2
-  when: icecast_install_method in ('obs', 'distribution')
+  when: icecast_install_method in ('obs', 'distrib')
 - import_tasks: compile_icecast.yml
   when: icecast_install_method == 'source'
 - import_tasks: config_icecast.yml

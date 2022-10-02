@@ -1,6 +1,6 @@
 - name: Set bindir depending on install method
   set_fact:
-    icecast_binary: "{{ ( icecast_install_method in ('obs', 'distribution') ) | ternary('/usr/bin/icecast2', '/usr/local/bin/icecast') }}"
+    icecast_binary: "{{ ( icecast_install_method in ('obs', 'distrib') ) | ternary('/usr/bin/icecast2', '/usr/local/bin/icecast') }}"
 
 - name: Enable cap_bind_port on icecast
   capabilities:
@@ -14,23 +14,37 @@
     regexp: 'ENABLE=.+'
     line: 'ENABLE=true'
     dest: /etc/default/icecast2 
-  notify: restart icecast
-  register: icecast_enabled
+  notify:
+    - restart icecast
   when: ansible_os_family == 'Debian' and icecast_install_method in ('obs', 'distribution')
+- name: Directory for PRNG seed
+  file:
+    state: directory
+    owner: "{{ icecast_user }}"
+    group: "{{ icecast_group }}"
+    path: /var/lib/icecast2
+  when: icecast_version is version_compare('2.4', '>')
 - name: Push Icecast Config file
   template:
     src: icecast.xml.j2
     dest: /etc/icecast2/icecast.xml
     lstrip_blocks: true
-  notify: reload icecast
+  notify:
+    - reload icecast
+- name: Service unit file for icecast
+  template:
+    src: icecast2.service.j2
+    dest: /etc/systemd/system/icecast2.service
+    owner: root
+    group: root
+    mode: "0644"
+  register: icecast_systemd_update
+- name: systemd reload if unit file changed
+  systemd:
+    daemon_reload: yes
+  when: icecast_systemd_update is changed
 - name: Ensure service is activated and started
   service:
     name: icecast2
     state: started 
-    enabled: yes 
-- name: restart icecast if we enabled it
-  service:
-    name: icecast2
-    state: restarted
-    enabled: yes 
-  when: icecast_enabled is changed
+    enabled: yes
